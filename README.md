@@ -37,6 +37,16 @@ This project demonstrates how to securely embed Apache Superset dashboards into 
 
 ---
 
+## 📊 Data Source
+
+The data used in this demonstration dashboard originates from the following Kaggle dataset:
+
+*   **Dataset:** [11000+ Medicine Details](https://www.kaggle.com/datasets/singhnavjot2062001/11000-medicine-details) on Kaggle.
+
+*(Note: The data might have been slightly modified or filtered for the specific needs of this demo.)*
+
+---
+
 ## 🔑 How to Use the Demo
 
 Log in with the following credentials to experience the different views:
