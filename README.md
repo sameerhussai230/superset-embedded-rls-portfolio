@@ -15,6 +15,14 @@ This project demonstrates how to securely embed Apache Superset dashboards into 
 
 ---
 
+## 📖 Detailed Walkthrough
+
+For a step-by-step guide on how this project was built, including detailed explanations of the Superset setup, FastAPI backend logic, and React frontend integration, check out my Medium article:
+
+➡️ [**Building Secure, Role-Based Embedded Dashboards with Apache Superset, FastAPI, and React**](https://medium.com/@sameerhussain230/building-secure-role-based-embedded-dashboards-with-apache-superset-fastapi-and-react-3798ed7f8651)
+
+---
+
 ## 🌟 Features
 
 *   **Secure Superset Embedding:** Integrates Superset dashboards seamlessly into a React application.
