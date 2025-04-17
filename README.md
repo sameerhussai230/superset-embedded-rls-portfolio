@@ -33,7 +33,7 @@ This project demonstrates how to securely embed Apache Superset dashboards into 
 
 *   **BI Tool:** Apache Superset
 *   **Backend:** Python, FastAPI
-*   **Frontend:** React, Vite, Superset Embedded SDK
+*   **Frontend:** React, Superset Embedded SDK
 *   **Containerization:** Docker, Docker Compose
 *   **Database (Superset Metadata):** PostgreSQL (in Docker)
 
@@ -61,16 +61,17 @@ Log in with the following credentials to experience the different views:
     *   Node.js & npm (or yarn)
 2.  **Clone:** `git clone https://github.com/sameerhussai230/superset-embedded-rls-portfolio.git`
 3.  **Configure Environment:**
-    *   Copy `.env.example` files (if provided, otherwise create) in `embedding_app` and `react_app` to `.env`.
-    *   Update `.env` files with your Superset URL, Admin credentials (for token generation), Dashboard ID, etc.
+    *   Update `.env` files with your Superset URL, Admin credentials (for token generation), Dashboard ID, etc .
 4.  **Run Superset (Docker):**
     *   `cd superset-embedded-rls-portfolio`
     *   `docker-compose up --build -d` (Wait for Superset to initialize)
     *   *(Optional: Setup Superset admin user, roles, upload data, create dashboard if not done)*
 5.  **Run Backend (FastAPI):**
     *   `cd embedding_app`
+    *   `python -m venv venv`
+    *   `venv\scripts\activate` (for windows)
     *   `pip install -r requirements.txt`
-    *   `uvicorn main:app --reload --port 8000`
+    *   `python main.py`
 6.  **Run Frontend (React):**
     *   `cd ../react_app`
     *   `npm install`
