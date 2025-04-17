@@ -1,0 +1,47 @@
+# docker-compose.yml
+version: '3.7' # Keep version for compatibility
+
+services:
+  superset:
+    build:
+      context: .
+      dockerfile: Dockerfile.custom
+    container_name: superset_app
+    ports:
+      - "8088:8088"
+    environment:
+      # Feature flags like embedding are controlled here or in superset_config.py
+      - SUPERSET_FEATURE_EMBEDDED_SUPERSET=true # Keep if embedding is needed
+      - SUPERSET_ENV=production
+      - SUPERSET_LOAD_EXAMPLES=no
+      # SECRET_KEY and Metadata DB URI are read from connection.py copied into the image
+    depends_on:
+      - db
+      - redis
+    networks:
+      - superset_network
+
+  db:
+    image: postgres:12
+    container_name: superset_db
+    environment:
+      POSTGRES_DB: superset
+      POSTGRES_USER: superset
+      POSTGRES_PASSWORD: superset
+    volumes:
+      - superset_db_data:/var/lib/postgresql/data
+    networks:
+      - superset_network
+
+  redis:
+    image: redis:alpine
+    container_name: superset_redis
+    networks:
+      - superset_network
+
+volumes:
+  superset_db_data:
+
+networks:
+  superset_network:
+    driver: bridge

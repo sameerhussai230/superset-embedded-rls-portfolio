@@ -1,0 +1,145 @@
+# --- General ---
+# Operating System generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+
+# IDE and Editor directories/files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.project
+.settings/
+*.tmproj
+
+# Log files
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Temporary files
+*~
+*.swp
+*.swo
+
+# --- Python (embedding_app) ---
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+# Usually these files are written by a python script from a template
+# before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+pytestdebug.log
+
+# Environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+env.bak/
+venv.bak/
+*_env/
+
+# --- Node.js / React (react_app) ---
+# Dependencies
+node_modules/
+
+# Build output (Vite typically uses 'dist')
+dist/
+build/
+.svelte-kit/
+.next/
+
+# Debug logs (already covered in General, but good to be explicit)
+# npm-debug.log*
+# yarn-debug.log*
+# yarn-error.log*
+
+# Optional eslint cache
+.eslintcache
+
+# Optional Prettier cache
+.prettiercache
+
+# Optional Stylelint cache
+.stylelintcache
+
+# Optional Testing files
+coverage/
+.nyc_output/
+
+# --- Secrets ---
+# Environment variables - IMPORTANT!
+# Ignore .env files in root, embedding_app, and react_app
+.env
+embedding_app/.env
+react_app/.env
+
+# Ignore common local environment overrides for frontend frameworks
+react_app/.env.local
+react_app/.env.*.local
+react_app/.env.development.local
+react_app/.env.production.local
+react_app/.env.test.local
+
+# --- Superset / Docker ---
+# (Usually not much to ignore here in the source repo itself)
+# If you generate local data volumes outside docker-compose volumes, ignore them
+# local_superset_data/
+
+# --- Other ---
+# Add any other specific files or directories you don't want to track
+# Example: large data files used for testing
+# data/*.csv

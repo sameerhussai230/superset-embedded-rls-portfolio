@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embedded Dashboard - Full View</title>
+    <style>
+        html, body {
+            height: 100%; /* Ensure html and body can expand */
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+            background-color: #f8f9fa;
+        }
+        *, *:before, *:after {
+             box-sizing: inherit; /* Apply box-sizing to all elements */
+        }
+         .page-container { /* Add a wrapper */
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Full viewport height */
+            padding: 15px;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 15px;
+            flex-shrink: 0; /* Prevent h1 from shrinking */
+        }
+        #dashboard-container {
+            flex-grow: 1; /* Allow container to grow and fill remaining space */
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden; /* Important for iframe sizing */
+             /* Explicit width/height removed - rely on flexbox */
+            display: block; /* Ensure it's a block element */
+        }
+         /* Target the iframe created by the SDK */
+        #dashboard-container iframe {
+             width: 100%;
+             height: 100%;
+             border: none; /* Remove iframe border */
+             display: block;
+        }
+        #loading, #error {
+             /* Keep loading/error styles */
+            text-align: center; padding: 50px; font-size: 1.2em;
+        }
+        #error { color: red; }
+    </style>
+    <!-- Superset Embedded SDK - Load from local static file -->
+    <script src="/static/superset-embedded-sdk.js"></script>
+</head>
+<body>
+     <!-- Added page container -->
+    <div class="page-container">
+        <h1>Full Dashboard View</h1>
+        <div id="loading">Loading Dashboard...</div>
+        <div id="error" style="display: none;"></div>
+         <!-- Mount point for the iframe -->
+        <div id="dashboard-container"></div>
+    </div>
+
+    <script>
+        // ... JavaScript code remains the same ...
+        const loadingDiv = document.getElementById('loading');
+        const errorDiv = document.getElementById('error');
+        const dashboardContainer = document.getElementById('dashboard-container');
+
+        async function fetchGuestTokenFull() { /* ... */ }
+        async function embedDashboard() { /* ... */ }
+
+        window.addEventListener('load', embedDashboard);
+
+        // --- Ensure function definitions are present ---
+         async function fetchGuestTokenFull() {
+            try {
+                const response = await fetch(`/get-guest-token-full`);
+                if (!response.ok) {
+                    let errorDetail = `Failed to fetch full guest token: ${response.statusText}`;
+                    try { const errorData = await response.json(); errorDetail = errorData.detail || errorDetail; } catch (e) { /* Ignore */ }
+                    throw new Error(errorDetail);
+                }
+                const data = await response.json();
+                 if (!data.token) { throw new Error("Token not found in response from backend."); }
+                 console.log("Full Guest Token fetched successfully.");
+                return data.token;
+            } catch (error) {
+                console.error("Error fetching full guest token:", error);
+                errorDiv.textContent = `Error fetching full guest token: ${error.message}`;
+                errorDiv.style.display = 'block';
+                loadingDiv.style.display = 'none';
+                throw error;
+            }
+        }
+
+        async function embedDashboard() {
+            console.log("embedDashboard function called (via window.onload).");
+
+            console.log("Checking if supersetEmbeddedSdk is loaded:", typeof supersetEmbeddedSdk);
+            if (typeof supersetEmbeddedSdk === 'undefined') {
+                errorDiv.textContent = 'Error: Superset Embedded SDK did not load correctly.';
+                errorDiv.style.display = 'block';
+                loadingDiv.style.display = 'none';
+                console.error("supersetEmbeddedSdk is undefined when embedDashboard was called.");
+                return;
+            }
+
+            try {
+                const guestToken = await fetchGuestTokenFull();
+                const embedConfig = {
+                    id: "{{ dashboard_id }}",
+                    supersetDomain: "{{ superset_url }}",
+                    mountPoint: document.getElementById("dashboard-container"), // Mount in the container
+                    fetchGuestToken: () => Promise.resolve(guestToken),
+                    dashboardUiConfig: { hideTitle: true }
+                };
+                console.log("Embedding FULL dashboard with config:", embedConfig);
+                await supersetEmbeddedSdk.embedDashboard(embedConfig);
+                console.log("Dashboard embedding initiated by SDK.");
+                loadingDiv.style.display = 'none';
+            } catch (error) {
+                console.error("Failed to embed full dashboard:", error);
+                 if (!errorDiv.textContent) {
+                    errorDiv.textContent = `Failed to embed full dashboard: ${error.message || error}`;
+                    errorDiv.style.display = 'block';
+                 }
+                 loadingDiv.style.display = 'none';
+            }
+        }
+        // --- End function definitions ---
+    </script>
+</body>
+</html>

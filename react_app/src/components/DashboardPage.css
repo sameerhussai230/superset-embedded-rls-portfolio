@@ -1,0 +1,49 @@
+/* src/components/DashboardPage.css */
+.dashboard-page-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Fill the content area */
+    width: 100%;
+    padding: 0; /* Remove padding if content area already has it */
+    box-sizing: border-box;
+  }
+  
+  .dashboard-page-container h2 {
+    margin: 0 0 15px 0; /* Space below title */
+    text-align: left;
+    flex-shrink: 0; /* Prevent title from shrinking */
+    color: #444;
+  }
+  
+  .dashboard-embed-container {
+    flex-grow: 1; /* Allow container to take up remaining space */
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Important for iframe sizing */
+    position: relative; /* Needed for potential absolute positioning of overlays */
+    background-color: #fff; /* Background while loading */
+    min-height: 400px; /* Ensure it has some height initially */
+    display: flex; /* Center loading/error messages */
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Style the iframe created by the SDK */
+  .dashboard-embed-container iframe {
+    display: block; /* Remove extra space below iframe */
+    width: 100%;
+    height: 100%;
+    border: none; /* Remove iframe border */
+  }
+  
+  /* Specific dashboard error styling */
+  .dashboard-error {
+      width: 80%; /* Don't let error messages span the whole container */
+      margin: 20px auto; /* Center error message */
+  }
+  
+  /* Add styles for loading message inside container */
+  .dashboard-embed-container .loading {
+      font-size: 1.1em;
+      color: #666;
+  }

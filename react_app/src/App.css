@@ -1,0 +1,54 @@
+/* src/App.css */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full viewport height */
+  width: 100%;
+}
+
+.app-header {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  flex-shrink: 0; /* Prevent header from shrinking */
+  border-bottom: 2px solid #444;
+}
+
+.app-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 1.5em;
+}
+
+.app-header nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Spacing between nav items */
+}
+
+.app-header .logout-button {
+    background-color: #dc3545; /* Red for logout */
+    border-color: #dc3545;
+    color: white;
+}
+.app-header .logout-button:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+
+.content-area {
+  flex-grow: 1; /* Allow content to fill remaining space */
+  padding: 20px;
+  overflow-y: auto; /* Add scroll if content overflows */
+  background-color: #f4f4f4; /* Light background for content */
+  color: #333; /* Dark text for content */
+  display: flex; /* Use flexbox for centering login/dashboard */
+  flex-direction: column; /* Stack elements vertically */
+}
+
+/* Ensure content area takes remaining height */
+main {
+    height: calc(100% - 80px); /* Adjust 80px based on your header height */
+    overflow: hidden; /* Prevent double scrollbars */
+}
