@@ -67,22 +67,98 @@ Log in with the following credentials to experience the different views:
     *   Docker & Docker Compose
     *   Python 3.8+ & Pip
     *   Node.js & npm (or yarn)
-2.  **Clone:** `git clone https://github.com/sameerhussai230/superset-embedded-rls-portfolio.git`
-3.  **Configure Environment:**
-    *   Update `.env` files with your Superset URL, Admin credentials (for token generation), Dashboard ID, etc .
-4.  **Run Superset (Docker):**
-    *   `cd superset-embedded-rls-portfolio`
-    *   `docker-compose up --build -d` (Wait for Superset to initialize)
-    *   *(Optional: Setup Superset admin user, roles, upload data, create dashboard if not done)*
-5.  **Run Backend (FastAPI):**
-    *   `cd embedding_app`
-    *   `python -m venv venv`
-    *   `venv\scripts\activate` (for windows)
-    *   `pip install -r requirements.txt`
-    *   `python main.py`
-6.  **Run Frontend (React):**
-    *   `cd ../react_app`
-    *   `npm install`
-    *   `npm run dev` (Usually runs on `http://localhost:5173`)
+
+2.  **Clone Repository:**
+    ```bash
+    git clone https://github.com/sameerhussai230/superset-embedded-rls-portfolio.git
+    cd superset-embedded-rls-portfolio
+    ```
+
+3.  **Configure Backend Environment:**
+    *   Navigate to the `embedding_app` directory.
+    *   Create a `.env` file (you can copy `.env.example` if one exists).
+    *   Ensure `SUPERSET_URL=http://localhost:8088` is set.
+    *   Set `SUPERSET_ADMIN_USER` and `SUPERSET_ADMIN_PASSWORD` to the credentials the backend will use to talk to the Superset API (e.g., `admin`/`admin` if using the default Superset admin).
+    *   Leave `SUPERSET_DASHBOARD_ID` blank for now.
+
+4.  **Configure Frontend Environment:**
+    *   Navigate to the `react_app` directory.
+    *   Create a `.env` file.
+    *   Set `VITE_API_BASE_URL=http://localhost:8000` (or your FastAPI port).
+    *   Set `VITE_SUPERSET_URL=http://localhost:8088`.
+    *   Leave `VITE_SUPERSET_DASHBOARD_ID` blank for now.
+
+5.  **Run Superset (Docker):**
+    *   Navigate back to the project root directory (`superset-embedded-rls-portfolio`).
+    *   Build and start the Docker containers:
+        ```bash
+        docker-compose up --build -d
+        ```
+    *   **First Time Setup Only:** Initialize Superset and create the admin user (use the same credentials as set for `SUPERSET_ADMIN_USER`/`PASSWORD` in the backend `.env`):
+        ```bash
+        # Create admin user
+        docker exec -it superset_app superset fab create-admin \
+          --username admin \
+          --firstname Admin \
+          --lastname User \
+          --email admin@example.com \
+          --password admin
+
+        # Initialize database and roles
+        docker exec -it superset_app superset db upgrade
+        docker exec -it superset_app superset init
+        ```
+    *   Wait a minute for services to stabilize. Access Superset UI at `http://localhost:8088` and log in (`admin`/`admin`).
+
+6.  **Setup Superset UI & Get Dashboard ID:**
+    *   Log in to Superset (`http://localhost:8088`).
+    *   Upload your data (e.g., the Kaggle CSV) via `Data -> Upload a CSV`.
+    *   Create your charts and assemble your dashboard.
+    *   Verify the `Gamma` role exists (`Settings -> List Roles`) and has `datasource access` and `dashboard access` for your data and dashboard.
+    *   Navigate to your dashboard, click `Share -> Embed dashboard`, and **copy the Dashboard ID (UUID)**.
+
+7.  **Update Dashboard ID in Environment Files:**
+    *   Paste the copied Dashboard ID into `embedding_app/.env`:
+        ```dotenv
+        SUPERSET_DASHBOARD_ID=your-copied-dashboard-uuid-here
+        ```
+    *   Paste the same Dashboard ID into `react_app/.env`:
+        ```dotenv
+        VITE_SUPERSET_DASHBOARD_ID=your-copied-dashboard-uuid-here
+        ```
+
+8.  **Run Backend (FastAPI):**
+    *   Navigate to `embedding_app`.
+    *   Set up a virtual environment:
+        ```bash
+        python -m venv venv
+        # Activate (Windows):
+        venv\Scripts\activate
+        # Activate (Linux/macOS):
+        # source venv/bin/activate
+        ```
+    *   Install dependencies:
+        ```bash
+        pip install -r requirements.txt
+        ```
+    *   Run the FastAPI server:
+        ```bash
+        # Using uvicorn for development with auto-reload
+        uvicorn main:app --reload --port 8000
+        # Or simply: python main.py
+        ```
+
+9.  **Run Frontend (React):**
+    *   Open a **new terminal**.
+    *   Navigate to `react_app`.
+    *   Install dependencies:
+        ```bash
+        npm install
+        ```
+    *   Run the React development server:
+        ```bash
+        npm run dev
+        ```
+    *   Access the application, usually at `http://localhost:5173`.
 
 ---
