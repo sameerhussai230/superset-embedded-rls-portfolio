@@ -17,14 +17,6 @@ SQLALCHEMY_DATABASE_URI = os.environ.get(
     "postgresql+psycopg2://superset:superset@db:5432/superset"
 )
 
-# -------------------------------
-# SQL Server Connection Details (REMOVED)
-# -------------------------------
-# Configuration for the 'umesh.v' SQL Server database has been removed
-# as requested, focusing on CSV uploads.
 
-# Removed the check for the placeholder key
-# if SECRET_KEY == "..." and os.environ.get("FLASK_ENV") == "production":
-#      print("WARNING: Using default Superset SECRET_KEY in production environment!")
 
 print(f"Metadata DB URI configured: {SQLALCHEMY_DATABASE_URI}") # Optional: Confirm URI is set
