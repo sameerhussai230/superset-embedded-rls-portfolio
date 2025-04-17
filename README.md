@@ -1,7 +1,5 @@
 # ✨ Superset Embedded RLS Portfolio Demo ✨
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 This project demonstrates how to securely embed Apache Superset dashboards into a custom web application (React + FastAPI), implementing dynamic **Row-Level Security (RLS)** based on user roles.
 
 **Created by:** [Sameer Hussain](https://www.linkedin.com/in/hussainsameer/)
