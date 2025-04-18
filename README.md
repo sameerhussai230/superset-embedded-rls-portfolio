@@ -2,8 +2,6 @@
 
 This project demonstrates how to securely embed Apache Superset dashboards into a custom web application (React + FastAPI), implementing dynamic **Row-Level Security (RLS)** based on user roles.
 
-**Created by:** [Sameer Hussain](https://www.linkedin.com/in/hussainsameer/)
-
 ---
 
 ## 🚀 Live Demo GIF
